@@ -1,0 +1,216 @@
+,country,clusters,total
+0,Argentina,0,0.01
+1,Argentina,1,0.0
+2,Argentina,2,0.08
+3,Argentina,3,0.02
+4,Argentina,4,0.01
+5,Armenia,0,0.0
+6,Armenia,1,0.0
+7,Armenia,2,0.0
+8,Armenia,3,0.0
+9,Armenia,4,0.0
+10,Australia,0,0.07
+11,Australia,1,0.0
+12,Australia,2,0.01
+13,Australia,3,0.01
+14,Australia,4,0.02
+15,Austria,0,0.01
+16,Austria,1,0.04
+17,Austria,2,0.01
+18,Austria,3,0.06
+19,Austria,4,0.01
+20,Bosnia and Herzegovina,0,0.0
+21,Bosnia and Herzegovina,1,0.0
+22,Bosnia and Herzegovina,2,0.0
+23,Bosnia and Herzegovina,3,0.0
+24,Bosnia and Herzegovina,4,0.0
+25,Brazil,0,0.0
+26,Brazil,1,0.0
+27,Brazil,2,0.0
+28,Brazil,3,0.0
+29,Brazil,4,0.0
+30,Bulgaria,0,0.0
+31,Bulgaria,1,0.0
+32,Bulgaria,2,0.0
+33,Bulgaria,3,0.0
+34,Bulgaria,4,0.0
+35,Canada,0,0.0
+36,Canada,1,0.0
+37,Canada,2,0.0
+38,Canada,3,0.0
+39,Canada,4,0.0
+40,Chile,0,0.01
+41,Chile,1,0.0
+42,Chile,2,0.08
+43,Chile,3,0.04
+44,Chile,4,0.01
+45,China,0,0.0
+46,China,1,0.0
+47,China,2,0.0
+48,China,3,0.0
+49,China,4,0.0
+50,Croatia,0,0.0
+51,Croatia,1,0.0
+52,Croatia,2,0.0
+53,Croatia,3,0.0
+54,Croatia,4,0.0
+55,Cyprus,0,0.0
+56,Cyprus,1,0.0
+57,Cyprus,2,0.0
+58,Cyprus,3,0.0
+59,Cyprus,4,0.0
+60,Czech Republic,0,0.0
+61,Czech Republic,1,0.0
+62,Czech Republic,2,0.0
+63,Czech Republic,3,0.0
+64,Czech Republic,4,0.0
+65,Egypt,0,0.0
+66,Egypt,1,0.0
+67,Egypt,2,0.0
+68,Egypt,3,0.0
+69,Egypt,4,0.0
+70,England,0,0.0
+71,England,1,0.0
+72,England,2,0.0
+73,England,3,0.0
+74,England,4,0.0
+75,France,0,0.11
+76,France,1,0.68
+77,France,2,0.02
+78,France,3,0.09
+79,France,4,0.03
+80,Georgia,0,0.0
+81,Georgia,1,0.0
+82,Georgia,2,0.0
+83,Georgia,3,0.0
+84,Georgia,4,0.0
+85,Germany,0,0.01
+86,Germany,1,0.0
+87,Germany,2,0.0
+88,Germany,3,0.06
+89,Germany,4,0.0
+90,Greece,0,0.0
+91,Greece,1,0.0
+92,Greece,2,0.01
+93,Greece,3,0.01
+94,Greece,4,0.0
+95,Hungary,0,0.0
+96,Hungary,1,0.0
+97,Hungary,2,0.0
+98,Hungary,3,0.0
+99,Hungary,4,0.0
+100,India,0,0.0
+101,India,1,0.0
+102,India,2,0.0
+103,India,3,0.0
+104,India,4,0.0
+105,Israel,0,0.0
+106,Israel,1,0.0
+107,Israel,2,0.01
+108,Israel,3,0.0
+109,Israel,4,0.0
+110,Italy,0,0.03
+111,Italy,1,0.02
+112,Italy,2,0.32
+113,Italy,3,0.17
+114,Italy,4,0.09
+115,Lebanon,0,0.0
+116,Lebanon,1,0.0
+117,Lebanon,2,0.0
+118,Lebanon,3,0.0
+119,Lebanon,4,0.0
+120,Luxembourg,0,0.0
+121,Luxembourg,1,0.0
+122,Luxembourg,2,0.0
+123,Luxembourg,3,0.0
+124,Luxembourg,4,0.0
+125,Macedonia,0,0.0
+126,Macedonia,1,0.0
+127,Macedonia,2,0.0
+128,Macedonia,3,0.0
+129,Macedonia,4,0.0
+130,Mexico,0,0.0
+131,Mexico,1,0.0
+132,Mexico,2,0.0
+133,Mexico,3,0.0
+134,Mexico,4,0.0
+135,Moldova,0,0.0
+136,Moldova,1,0.0
+137,Moldova,2,0.0
+138,Moldova,3,0.0
+139,Moldova,4,0.0
+140,Morocco,0,0.0
+141,Morocco,1,0.0
+142,Morocco,2,0.0
+143,Morocco,3,0.0
+144,Morocco,4,0.0
+145,New Zealand,0,0.04
+146,New Zealand,1,0.0
+147,New Zealand,2,0.0
+148,New Zealand,3,0.01
+149,New Zealand,4,0.01
+150,Peru,0,0.0
+151,Peru,1,0.0
+152,Peru,2,0.0
+153,Peru,3,0.0
+154,Peru,4,0.0
+155,Portugal,0,0.02
+156,Portugal,1,0.21
+157,Portugal,2,0.0
+158,Portugal,3,0.01
+159,Portugal,4,0.0
+160,Romania,0,0.0
+161,Romania,1,0.0
+162,Romania,2,0.0
+163,Romania,3,0.0
+164,Romania,4,0.0
+165,Serbia,0,0.0
+166,Serbia,1,0.0
+167,Serbia,2,0.0
+168,Serbia,3,0.0
+169,Serbia,4,0.0
+170,Slovakia,0,0.0
+171,Slovakia,1,0.0
+172,Slovakia,2,0.0
+173,Slovakia,3,0.0
+174,Slovakia,4,0.0
+175,Slovenia,0,0.0
+176,Slovenia,1,0.0
+177,Slovenia,2,0.0
+178,Slovenia,3,0.0
+179,Slovenia,4,0.0
+180,South Africa,0,0.0
+181,South Africa,1,0.0
+182,South Africa,2,0.02
+183,South Africa,3,0.02
+184,South Africa,4,0.01
+185,Spain,0,0.01
+186,Spain,1,0.0
+187,Spain,2,0.12
+188,Spain,3,0.05
+189,Spain,4,0.02
+190,Switzerland,0,0.0
+191,Switzerland,1,0.0
+192,Switzerland,2,0.0
+193,Switzerland,3,0.0
+194,Switzerland,4,0.0
+195,Turkey,0,0.0
+196,Turkey,1,0.0
+197,Turkey,2,0.0
+198,Turkey,3,0.0
+199,Turkey,4,0.0
+200,US,0,0.64
+201,US,1,0.05
+202,US,2,0.3
+203,US,3,0.42
+204,US,4,0.78
+205,Ukraine,0,0.0
+206,Ukraine,1,0.0
+207,Ukraine,2,0.0
+208,Ukraine,3,0.0
+209,Ukraine,4,0.0
+210,Uruguay,0,0.0
+211,Uruguay,1,0.0
+212,Uruguay,2,0.0
+213,Uruguay,3,0.0
+214,Uruguay,4,0.0

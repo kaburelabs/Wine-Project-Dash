@@ -215,8 +215,8 @@ app.layout = html.Div([
                         dcc.Tab(label='Data & Details', value='tab-1'),
                         dcc.Tab(label='Dataset Profilling', value='tab-2'),
                         dcc.Tab(label='Graphs & EDA', value='tab-3'),
-                        dcc.Tab(label='Recommender System', value='tab-4'),
-                        dcc.Tab(label='Model Explanability', value='tab-5')
+                        dcc.Tab(label='Reviews Clustering', value='tab-4'),
+                        dcc.Tab(label='Recommender System', value='tab-5')
                 ], 
                 value='tab-1'),
         html.Div(id='tabs-content-example')
@@ -225,8 +225,9 @@ app.layout = html.Div([
 ], style={'margin':'0 auto'})
 
 @app.callback(Output('tabs-content-example', 'children'),
-              [Input('tabs-example', 'value')])
-def render_content(tab):
+              [Input('tabs-example', 'value'), 
+               Input('tabs-example', 'value')])
+def render_content(tab, val_clusters):
     if tab == 'tab-1':
         return html.Div([
                     html.Div([
@@ -262,18 +263,45 @@ def render_content(tab):
         return layout2
 
     elif tab == 'tab-4':
-            return html.Div([html.Div([
-                dcc.Dropdown(
-                            id='dropdown-tab4',
-                            options=[{'label': i, 'value': i} for i in df_train['country'].fillna('null').unique()],
-                            value='US'),
+            return html.Div([
+                        html.Div([
+                            dcc.Markdown("""### K-Means Clustering
+                            """, className='row'),
+                            html.Div(id='tab-4-display-c', className='row'),
+                            #button line
+                            dcc.Slider(id='dropdown-tab4',
+                                        min=2,
+                                        max=24,
+                                        value=6,
+                                        marks={
+                                            2: {'label': '2', 'style': {'color': '#272727'}},
+                                            5: {'label': '5', 'style': {'color': '#272727'}},
+                                            10: {'label': '10', 'style': {'color': '#272727'}},
+                                            15: {'label': '15', 'style': {'color': '#f50'}},
+                                            20: {'label': '20', 'style': {'color': '#f50'}},
+                                            24: {'label': '24', 'style': {'color': '#f50'}}
+                                        },
+                                        included=False, className='four columns'
+                                    ),
+                            
+                        ], className='row', style={"background":"rgb(80, 216, 144)", 'padding':'10px'}),
                 html.Div([
-                        dcc.Graph(
-                            id='graph-4-tabs', style={'margin':'0 auto'}, className='six columns'
-                        ),
-                        generate_html_table()
-                ], )
-            ], style={'margin':'0 auto'})])
+                    html.Div([
+                            dcc.Graph(
+                                id='graph-4-tabs', style={'margin':'0 auto'}, className='five columns'
+                            ),
+                            dcc.Graph(id='table-tab4-2', className='seven columns', style={'height':'450px'})
+
+                    ], className="row"),
+                    html.Div([
+                            html.Div(id='table-tab4', style={'height':'270px', 'margin':'0 auto'})
+                    ]),
+                    html.Div([
+                            dcc.Graph(id='graph-4-tabs-2', style={'height':'450px', 'margin':'0 auto'})
+                    ])
+
+            ], style={'margin':'0 auto'})
+        ])
 
 
 
@@ -335,44 +363,51 @@ def update_table(page_current, page_size, sort_by, filter):
 
     return dff.iloc[page * size: (page + 1) * size].to_dict('records')
 
-kmeans_elbow = pd.read_csv('data/elbow_method.csv')
+kmeans_elbow = pd.read_csv('data/elbow_method.csv', index_col=0)
+
 
 @app.callback(Output('graph-4-tabs', 'figure'),
              [Input('dropdown-tab4', "value")])
 def tf_idf_words(country_var):
-    vectorizer = TfidfVectorizer(ngram_range = (1, 3), min_df=1, 
-                                 stop_words='english', max_features=20,
-                                 max_df=.5)
+    tmp = kmeans_elbow[kmeans_elbow.K_number == country_var]
+    fig = px.scatter(kmeans_elbow, x="K_number", 
+                                y="Distorcions", 
+                                title="Elbow Method Runs").update_traces(mode='lines+markers')
 
-    print('valor dropwdown', country_var)
-
-    X2 = vectorizer.fit_transform(df_train[(df_train.country == 'Portugal')]['description_desc']) 
-   
-    features = (vectorizer.get_feature_names()) 
-    scores = (X2.toarray()) 
-    
-    # Getting top ranking features 
-    sums = X2.sum(axis = 0) 
-    data1 = [] 
-    
-    for col, term in enumerate(features): 
-        data1.append( (term, sums[0,col] )) 
-
-    ranking = pd.DataFrame(data1, columns = ['term','rank']) 
-    words = (ranking.sort_values('rank', ascending = False))[:15]
-    
-    fig = px.line(kmeans_elbow, x='K_number', y='Distorcions')
+    fig.update_layout(title_x=.5)
 
     return fig
 
+@app.callback(Output('graph-4-tabs-2', 'figure'),
+             [Input('dropdown-tab4', "value")])
+def tf_idf_words(country_var):
+
+    tmp = pd.read_csv(f"data/clusters/crosstab_country{country_var}.csv", index_col=0)
+
+    fig = px.bar(tmp, x="clusters",
+                      y="total", color='country',
+                      title="Elbow Method Runs")
+
+    fig.update_layout(title_x=.5,xaxis=dict(type='category', categoryarray= [x for x in sorted(tmp['clusters'])]))
+
+    return fig
+
+@app.callback(Output('tab-4-display-c', 'children'),
+             [Input('dropdown-tab4', "value")])
+def tf_idf_words(country_var):
+
+    # fig = px.line(kmeans_elbow, x="K_number", 
+    #                             y="Distorcions", 
+    #                             title="Elbow Method Runs")
+
+    return html.P(f"Number of Selected Clusters: {country_var}")
+
 
 def generate_html_table(max_rows=10, n_clusters=4):
- 
+
     df = pd.read_csv(f"data/clusters/clusters{n_clusters}.csv", index_col=0)
 
     return html.Div(
-        [
-            html.Div(
                 html.Table(
                     # Header
                     [html.Tr([html.Th()])]
@@ -385,7 +420,7 @@ def generate_html_table(max_rows=10, n_clusters=4):
                                     dash_table.DataTable(
                                         columns=[{"name": i, "id": i} for i in df.columns],
                                         data=df.to_dict('rows')
-                                    )
+                                    ), style={'width':'945px'}
                                         
                                     )
                                 
@@ -394,11 +429,30 @@ def generate_html_table(max_rows=10, n_clusters=4):
                         #for i in range(min(len(df), max_rows))
                     ]
                 ),
-                style={"height": "300px", "overflowY": "scroll"},
-            ),
-        ],
-        style={"height": "100%"}, className='six columns')
+                style={"height": "265px", 'width':'960px',"overflowY": "scroll", 'margin':'0 auto'},
+            )
 
+
+@app.callback(Output('table-tab4', 'children'),
+             [Input('dropdown-tab4', "value")])
+def _update_cluster(dropdown):
+    return generate_html_table(n_clusters=dropdown)
+
+@app.callback(Output('table-tab4-2', 'figure'),
+             [Input('dropdown-tab4', "value")])
+def _update_cluster(n_clusters):
+
+    df = pd.read_csv(f"data/clusters/count_clusters{n_clusters}.csv", index_col=0)
+    fig = px.bar(df, x="clusters",
+                     y="total_reviews", #category_orders={'clusters':df.sort_values('clusters')},
+                     title="Distribution of Clusters")
+
+    fig.update_layout(title_x=.5,
+                      xaxis=dict(type='category', 
+                                 categoryarray= [x for x in sorted(df['clusters'])])
+                            )
+
+    return fig
 
 def _scatter_view(data, x_val, y_val, log):
     
@@ -648,9 +702,9 @@ def update_tf_idf(clickData):
         country_name = ''.join(country_name)
     else:
         pass
-    print()
-    print('teste df train', df_train[df_train['title'] == title_name])
-    print(df_train[(df_train['country'] == country_name)]['title'])
+    # print()
+    # print('teste df train', df_train[df_train['title'] == title_name])
+    # print(df_train[(df_train['country'] == country_name)]['title'])
     dff = df_train[(df_train['country'] == country_name) & (df_train['title'] == title_name)]
     print('teste dff', dff)
     var_aspects=dff['aspects'].values
