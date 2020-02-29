@@ -206,6 +206,11 @@ def create_footer():
     footer = html.Footer(div, style=footer_style, className='twelve columns')
     return footer
 
+import pickle 
+
+model = pickle.load(open("modelKnn.pkl", 'rb'))
+matrix = pickle.load(open("data.h5", 'rb'))
+
 
 app.layout = html.Div([
     create_header('Dashboard'),
@@ -222,7 +227,7 @@ app.layout = html.Div([
         html.Div(id='tabs-content-example')
     ], className='container'),
     create_footer()
-], style={'margin':'0 auto'})
+], style={'margin':'0 auto', 'overflow':'hidden'})
 
 @app.callback(Output('tabs-content-example', 'children'),
               [Input('tabs-example', 'value'), 
@@ -302,8 +307,68 @@ def render_content(tab, val_clusters):
 
             ], style={'margin':'0 auto'})
         ])
+    elif tab == 'tab-5':
+        return html.Div([
+            html.Div([
+                html.Div([
+                    dcc.Dropdown(id='tab-5-varieties',
+                                options=[
+                                    {'label': i, 'value': n} for n, i in enumerate(matrix.index)],
+                                placeholder='Set the variety (Zinfandel, Sauvignon, Primitivo, Red....)', 
+                                className='five columns'
+                            ),
+                    html.Div([
+                    html.Button('Get Recommendation!', id='input-box'),
+                    html.Div([html.P(id='recommender-title', style={'padding':'.5rem', 'margin':''}), 
+                              dash_table.DataTable(id='recommender-table', 
+                                                   columns=[{'name':i, 'id':i} for i in ['K', 'variety', 'Distance']],
+                                                   page_size=5, fixed_columns={'headers': True, 'data': 0},
+                                                   fixed_rows={'headers': True, 'data': 5},
+                                                   style_cell_conditional=[
+                                                        # {
+                                                        #     'if': {'column_id': c},
+                                                        #     'maxWidth': '90px',
+                                                        #     'textAlign':'left',
+                                                        # #    'overflowY': 'hidden',
+                                                        #     'textOverflow':'hidden'
+                                                        # } for c in ['province', 'winery', 'title']
+                                                        {'if': {'column_id': 'variety'}, 'width': '400px'},
+                                                        {'if': {'column_id': 'K'}, 'width': '50px'},
+                                                        {'if': {'column_id': 'Distance'}, 'width': '100px'},
+                                                    ], 
 
+                             )
+                            ])], className='seven columns', style={'allign':'left'})
+                        ])
+                    ], style={'height':'72vh'})
+                ])
 
+print(matrix.index)
+
+@app.callback(
+    [dash.dependencies.Output('recommender-table', 'data'),
+     dash.dependencies.Output('recommender-title', 'children')],
+    [dash.dependencies.Input('input-box', 'n_clicks')],
+    [dash.dependencies.State('tab-5-varieties', 'value')])
+def update_output(n_clicks, variety):
+    # print(matrix.iloc[value,:].values)
+    print('n_clicks', n_clicks, 'varieties', variety)
+    if variety == None:
+        variety = 5
+    distance, indice = model.kneighbors(matrix.iloc[variety,:].values.reshape(1,-1), n_neighbors=6)
+    #print(distance, indice) 
+    cols = ['K', 'variety', 'Distance']
+    vals = []
+        
+    tmp = pd.DataFrame()
+
+    for i in range(0, len(distance.flatten())):
+        
+        vals.append((i, matrix.index[indice.flatten()[i]], distance.flatten()[i]))
+
+        df = pd.DataFrame(vals, columns=cols)
+    
+    return [df[1:].to_dict('rows'), f'Recommender for: {matrix.index[indice.flatten()[0]]}']
 
 operators = [['ge ', '>='], ['le ', '<='], ['lt ', '<'],
              ['gt ', '>'], ['ne ', '!='], ['eq ', '='],
@@ -552,7 +617,7 @@ def update_tf_idf(clickData, xaxis_column_name, axis_type):
     #[{'label': i, 'value': i} for i in fnameDict[name]]
     return [{'label': province, 'value': province} for province in dff['province'].unique()]
 
-
+print()
 @app.callback(
     dash.dependencies.Output('province-selector1', 'value'),
     [dash.dependencies.Input('crossfilter-indicator-scatter', 'clickData')]
@@ -694,10 +759,6 @@ def update_tf_idf(clickData):
     title_name = clickData['points'][0]['customdata'][0]
     #hover = clickData['points'][0]['hovertext']
 
-    print("click selector: ", clickData)
-    print('country selector aspects:', country_name)
-    print('title selector aspects:', title_name)
-
     if type(country_name) == list:
         country_name = ''.join(country_name)
     else:
@@ -706,7 +767,7 @@ def update_tf_idf(clickData):
     # print('teste df train', df_train[df_train['title'] == title_name])
     # print(df_train[(df_train['country'] == country_name)]['title'])
     dff = df_train[(df_train['country'] == country_name) & (df_train['title'] == title_name)]
-    print('teste dff', dff)
+
     var_aspects=dff['aspects'].values
     wineries=dff['winery'].nunique()
     # print('aspects selector', dff)

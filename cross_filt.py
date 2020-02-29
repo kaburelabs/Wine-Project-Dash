@@ -228,13 +228,14 @@ layout2 = html.Div([
                                                 # #    'textOverflow': 'ellipsis',
                                                 },  
                                                 style_cell_conditional=[
-                                                        {
-                                                            'if': {'column_id': c},
-                                                            'maxWidth': '90px',
-                                                            'textAlign':'left',
-                                                        #    'overflowY': 'hidden',
-                                                            'textOverflow':'hidden'
-                                                        } for c in ['province', 'winery', 'title']
+                                                        # {
+                                                        #     'if': {'column_id': c},
+                                                        #     'maxWidth': '90px',
+                                                        #     'textAlign':'left',
+                                                        # #    'overflowY': 'hidden',
+                                                        #     'textOverflow':'hidden'
+                                                        # } for c in ['province', 'winery', 'title']
+                                                        {'if': {'column_id': 'variety'}, 'maxWidth': '50px'},
                                                     ], 
                         )], className="row", style={'height':'50%', 'margin':'0 auto'})
                 ], className='five columns', style={'height':'600px'}),
