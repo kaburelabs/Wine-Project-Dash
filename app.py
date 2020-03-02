@@ -275,7 +275,7 @@ def render_content(tab, val_clusters):
                         #html.Ul([html.Li(x) for x in my_list])
                     ],
         style={'list-style-type': 'none', 'font-size':'16px'})
-    ])], className="row", style={'backgroundColor':'#effffb', 'padding':'25px', 'margin':'50px'}),
+    ])], className="row", style={'backgroundColor':'#effffb', 'padding':'25px', 'margin':'50px auto', 'width':'80%'}),
             html.Iframe(
                 id='graph-1-tabs',
                 src=app.get_asset_url('profiling1.html'),
@@ -394,6 +394,7 @@ def render_content(tab, val_clusters):
 
 def main_page():
     return html.Div([
+        html.Div([
            html.H2("Data Specifications"), 
            html.P(["The dataset was firstly get in ", 
                    html.A('Wine Reviews Dataset', href='https://www.kaggle.com/zynicide/wine-reviews', target='_blank' ), 
@@ -404,22 +405,21 @@ def main_page():
            html.H3("Selections"),
            html.P("The webapp was done using only titles from the harvests of 2004 to 2015"),
            html.P("This selection give us the total of: 117350 total rows, 43 countries, 406 provinces, 674 varieties from 15595 wineries that has 73194 unique titles. (You can access all this informations in Data Profiling Section."),
-           html.Br(),
-           html.Br(),
+           html.Br(),], style={'padding':'0 50px'}),
            html.H3("Principal techniques applied to extract informations and insights: ", style={'textAlign':'center'}),
                 html.Div([
                         html.Div([
                         html.H4("Data Profiling:"),
-                        html.P("Data profiling is the process of examining the data available from an existing information source and collecting statistics or informative summaries about that data.")
+                        html.P("Data profiling is the process of examining the data available from an existing information source and collecting statistics or informative summaries about that data.", style={'textAlign':'justify'})
                         ], className='four columns', style={'display':'inline-block', 'padding':'20px 50px'}),
                         html.Div([
                         html.H4("TF-IDF:"),
-                        html.P("TF- IDF stands for Term Frequency and Inverse Document Frequency . TF-IDF helps in evaluating importance of a word in a document. In order to ascertain how frequent the term/word appears in the document and also to represent the document in vector form, let's break it down to following steps.")
+                        html.P("TF- IDF stands for Term Frequency and Inverse Document Frequency . TF-IDF helps in evaluating importance of a word in a document. In order to ascertain how frequent the term/word appears in the document and also to represent the document in vector form, let's break it down to following steps.", style={'textAlign':'justify'})
                         ], className='four columns', style={'display':'inline-block', 'padding':'20px 15px'}),
                         html.Div([
                         html.H4("Usupervised Techniques:"),
-                        html.P("We are using two different unsupervised learning algorithmn to help detect patterns in the reviews(K-means) and in the recommender system (K-NN). I'm also using (nltk.Vader) to extract and detect subjective informations and Sentiment and affective states (sentiment analysis) and PCA (dimension reduction) techniques")
-                        ], className='four columns', style={'display':'inline-block', 'padding':'20px 50px'}),                        
+                        html.P("We are using two different unsupervised learning algorithmn to help detect patterns in the reviews(K-means) and in the recommender system (K-NN). I'm also using (nltk.Vader) to extract and detect subjective informations and Sentiment and affective states (sentiment analysis) and PCA (dimension reduction) techniques", style={'textAlign':'justify'})
+                        ], className='four columns', style={'display':'inline-block', 'padding':'20px 50px',}),                        
                 ], className='row'),
         ], style={'backgroundColor':'#effffb', 'margin':'50px auto', 'padding':'25px', 'width':'80%'})
 
@@ -512,6 +512,7 @@ def update_table(page_current, page_size, sort_by, filter):
                     inplace=False
             )
     page = page_current
+    
     size = page_size
 
     return dff.iloc[page * size: (page + 1) * size].to_dict('records')
@@ -636,8 +637,8 @@ def _scatter_view(data, x_val, log):
 
     fig.update_layout(showlegend=False, title_x=.5, 
                     #title=f"Distribution of {x_val} <br>by {color}",
-                    xaxis_title=f"Price per Bottle (in USD)", 
-                    yaxis_title=f"Points Range",
+                    xaxis_title=f"Mean Price per Bottle (in USD)", 
+                    yaxis_title=f"Mean Points Range",
                     #xaxis={'type':'category'},
                     #margin=dict(t=100, l=50)
             )
