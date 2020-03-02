@@ -6,7 +6,7 @@ import plotly.express as px
 import dash_table
 
 import re
-from app import app
+
 from operator import itemgetter
 def remove_year(year):
     #years= year.str.extract(r'([0-9]{4})')
