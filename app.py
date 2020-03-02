@@ -200,7 +200,7 @@ def create_footer():
         'font-size': '2.2rem',
         'background-color': 'rgb(79, 152, 202)',
         #'padding': '2.5rem',
-        'margin-top': '3rem', 
+        'margin-top': '5rem', 
         'display':'inline-block', 'padding':'16px 32px 8px'
     }
     footer = html.Footer(div, style=footer_style, className='twelve columns')
@@ -331,18 +331,33 @@ def render_content(tab, val_clusters):
                             html.H3("Cluster Analysis", style={'textAlign':'center'}),
                             html.Div([
                                 html.H4("Cluster Analysis"),
-                                html.P(["It's the fdfafafdsafdsafsthe fdfafafdsafdsafsthe fdfafafdsafdsafsthe fdfafafdsafdsafsthe fdfafafdsafdsafsthe fdfafafdsafdsafsthe fdfafafdsafdsafs "])
+                                html.P(["The model has a cluster center that returns the coordinates of the k cluster centroids. Each token in the created vectorizer has a dimension or doordinate in the centroid and represents it's relative frequency within that cluster. In the table beside we have the top ten most important words for each cluster."])
                             ], style={ 'display':'inline-block'}, className='three columns'),
-                            html.Div(id='table-tab4', style={'height':'370px', 'display':'inline-block'}, className='nine columns')
+                            html.Div(id='table-tab4', style={'height':'310px', 'display':'inline-block'}, className='nine columns')
                     ], className='row'),
                     html.Div([
-                            dcc.Graph(id='graph-4-tabs-2', style={'height':'450px', 'margin':'0 auto'})
-                    ])
+                            html.Div([
+                                html.H3("Crosstab Clusters x Country")
+                                  ], style={'textAlign':'center'}),
+                            html.Div([
+                            dcc.Graph(id='graph-4-tabs-2', style={'height':'500px', 'margin':'0 auto'})
+                            ])
+                    ], style={'margin-top':'25px', 'padding':'25px'})
 
             ], style={'margin':'0 auto'})
         ])
     elif tab == 'tab-5':
         return html.Div([
+            html.Div([
+                html.H3("Collabrative filtering - Nearest Neighbour"),
+                html.P("A small recommender system is made using Nearest Neighbors algorithm.", style={"fontSize":"16px"}),       
+                html.Br(),         
+                html.Ul([html.Li("Similarity is the cosine of the angle between the 2 vectors of the item vectors of A and B.", style={"fontSize":"16px"}),
+                        html.Li("Closer the vectors, smaller will be the angle and larger the cosine", style={"fontSize":"16px"})]),
+                html.Br(),
+                html.Br(),  
+                html.P("To get the recommendations, choose a variety that you want to get similar ones.", style={"fontSize":"20px"}),                               
+            ],  style={'background':'rgb(239, 255, 251)', 'width':'80%', 'margin':'50px auto', 'padding':'25px'}),
             html.Div([
                 html.Div([
                     dcc.Dropdown(id='tab-5-varieties',
@@ -352,7 +367,8 @@ def render_content(tab, val_clusters):
                                 className='five columns', style={'zIndex': '999', 'position': 'relative'}
                             ),
 
-                    html.Button('Get Recommendation', id='input-box', style={'textAlign':'center'}, className='three columns'),], className="row"),
+                    html.Button('Get Recommendation', id='input-box', style={'textAlign':'center'}, className='three columns'),
+                ], className="row"),
                 html.Div([
                     html.Div([html.P(id='recommender-title', style={'padding':'.5rem', 'margin':''}), 
                               dash_table.DataTable(id='recommender-table', 
@@ -389,7 +405,7 @@ def main_page():
            html.Br(),
            html.H3("Selections"),
            html.P("The webapp was done using only titles from the harvests of 2004 to 2015"),
-           html.P("This selection give us the total of: 117350 total rows, 43 countries, 406 provinces, 674 varieties from 15595 wineries that has 73194 unique titles."),
+           html.P("This selection give us the total of: 117350 total rows, 43 countries, 406 provinces, 674 varieties from 15595 wineries that has 73194 unique titles. (You can access all this informations in Data Profiling Section."),
            html.Br(),
            html.Br(),
            html.H3("Principal techniques applied to extract informations and insights: ", style={'textAlign':'center'}),
@@ -540,9 +556,13 @@ def tf_idf_words(country_var):
 
     fig = px.bar(tmp, x="clusters",
                       y="total", color='country',
-                      title="Elbow Method Runs")
+                      title="Percent of Countries in each Cluster")
 
-    fig.update_layout(title_x=.5,xaxis=dict(type='category', categoryarray= [x for x in sorted(tmp['clusters'])]))
+    fig.update_layout(title_x=.5, height=500,
+                      xaxis=dict(type='category', 
+                                 title='Cluster Number',
+                                 categoryarray= [x for x in sorted(tmp['clusters'])]),
+                      yaxis=dict(title='Percent of Total'))
     
     return fig
 
