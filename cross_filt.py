@@ -55,8 +55,8 @@ def _scatter_view(data, x_val, y_val, log):
 
     fig.update_layout(showlegend=False, title_x=.5, 
                     #title=f"Distribution of {x_val} <br>by {color}",
-                    xaxis_title=f"Price per Bottle (in USD)", 
-                    yaxis_title=f"Points Range",
+                    xaxis_title=f"Mean Price per Bottle (in USD)", 
+                    yaxis_title=f"Mean Points Range",
                     #xaxis={'type':'category'},
                     #margin=dict(t=100, l=50)
             )
@@ -98,7 +98,7 @@ def tf_idf_words(df, country_var, variety, ngram, province):
     fig = px.bar(words, x='term', y='rank', title=title, height=500)
     fig.update_layout(autosize=False, title_x=.5)
     return fig
-
+from textwrap import dedent as d
 columns=['province', 'winery', 'title', 'harvest', 'points', 'price']
 # print(scatt.columns)
 layout2 = html.Div([
@@ -123,13 +123,21 @@ layout2 = html.Div([
                     value=1,
                     labelStyle={'display': 'inline-block'}, 
                 )], className='two columns', style={'textAlign':'center'}),
-            html.Div([    
-                html.P("testetes", style={'color':'#272727', 'margin':'0 auto', 'fontSize':'15px'}),
-                dcc.Dropdown(
-                    id='crossfilter-yaxis-column',
-                    options=[{'label': i, 'value': i} for i in ['points']],
-                    value='points')], className='two columns', style={'margin':'0 auto', 'textAlign':'center'}
-                ),
+            # html.Div([    
+            #     html.P("testetes", style={'color':'#272727', 'margin':'0 auto', 'fontSize':'15px'}),
+            #     dcc.Dropdown(
+            #         id='crossfilter-yaxis-column',
+            #         options=[{'label': i, 'value': i} for i in ['points']],
+            #         value='points')], className='two columns', style={'margin':'0 auto', 'textAlign':'center'}
+            #     ),
+            html.Div([
+                dcc.Markdown(d("""
+                    **Selection Data** 
+
+                    To get informations about an specific pair of **Country/Variety**, click on the points in scatter chart below. 
+                """)),
+            ], className='eight columns', style={'padding':'0px 50px'}
+            ),
         ], className='row', style={'borderLeft': 'thin lightgrey solid',
                                    'backgroundColor': '#50d890',
                                    'padding': '10px','margin':'0 auto'}),
@@ -228,38 +236,42 @@ layout2 = html.Div([
                                                 # #    'textOverflow': 'ellipsis',
                                                 },  
                                                 style_cell_conditional=[
-                                                        # {
-                                                        #     'if': {'column_id': c},
-                                                        #     'maxWidth': '90px',
-                                                        #     'textAlign':'left',
-                                                        # #    'overflowY': 'hidden',
-                                                        #     'textOverflow':'hidden'
-                                                        # } for c in ['province', 'winery', 'title']
-                                                        {'if': {'column_id': 'variety'}, 'maxWidth': '50px'},
+                                                        {
+                                                            'if': {'column_id': c},
+                                                            'maxWidth': '90px',
+                                                            'textAlign':'left',
+                                                        #    'overflowY': 'hidden',
+                                                            'textOverflow':'hidden'
+                                                        } for c in ['province', 'winery', 'title']
                                                     ], 
                         )], className="row", style={'height':'50%', 'margin':'0 auto'})
                 ], className='five columns', style={'height':'600px'}),
         
 ]),        ], className="row", style={'padding':'24px 0'}),
             html.Div([
-            html.Div(id='mark-1', children=[
-                dcc.Markdown('''
-                    ###  Reviews Specification
-                    You can select in the Scatter plot on the right the Titles and see some aspects of the reviews of sommeliers.
-
-
-                    #### Reviews Specications are composed by some parts 2 basic parts:
-                    - TFIDF - You can select the N-gram that you desire for each Country/Variety pair. 
-                    - Scatter Plot Chart where you can select an specific variety to see some informations and main aspects of sommelier reviews.  
-          
-                    The Aspects of reviews was extracted by SpaCy using some POS tagging techniques;
-                     
-                    NOTE: To avoid huge computational calculations, I'm limiting for only one review aspect, chosen randomly by title. 
-                    '''),
-            ], className='ten columns offset-by-one',style={'backgroundColor':'#effffb', 
-                                                'padding':'24px 36px 12px',
-                                                'textAlign':'center'}), 
-            ], className='row', style={'margin':'0 auto'}),
+                html.Div([
+                    html.H2("Reviews Specification", style={'textAlign':'center'}), 
+                    html.P(["You can select in the Scatter plot on the right the Titles and see some aspects of the reviews of sommeliers."], 
+                    style={'fontSize':'16px', 'textAlign':'center'}),
+                    html.Br(),
+                    html.Br(),
+                    html.H3(" Reviews Specications are composed by some parts 3 basic parts: ", style={'textAlign':'center', 'padding':'0 50px'}),
+                            html.Div([
+                                    html.Div([
+                                    html.H4("TFIDF"),
+                                    html.P("TFIDF - You can select the N-gram that you desire for each Country/Variety pair.")
+                                    ], className='four columns', style={'display':'inline-block', 'padding':'0 50px'}),
+                                    html.Div([
+                                    html.H4("Scatter Plot"),
+                                    html.P("Scatter Plot Chart where you can select an specific variety to see some informations and main aspects of sommelier reviews. ")
+                                    ], className='four columns', style={'display':'inline-block','padding':'0 35px'}),
+                                    html.Div([
+                                    html.H4("Aspects - SpaCy"),
+                                    html.P("The Aspects of reviews was extracted by SpaCy using some POS tagging techniques")
+                                    ], className='four columns', style={'display':'inline-block','padding':'0 50px'}),                        
+                            ], className='row'),
+            ], style={'backgroundColor':'#effffb', 'width':'80%', 'margin':'0 auto', 'padding':'25px',}),
+        ], className='row'),
             html.Div([
                 html.Div([    
                     html.P("TfIdf N-grams: ", style={'color':'#272727', 'fontSize':'18px'}),
