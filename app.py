@@ -51,6 +51,7 @@ else:
 
 ## CSS EXTERNAL FILE
 external_stylesheets = ['https://codepen.io/kaburelabs/pen/xxGRXWa.css', 
+                        "https://codepen.io/chriddyp/pen/brPBPO.css",
                         'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
                         'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css']
 
