@@ -18,11 +18,8 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import os 
-
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.decomposition import PCA, TruncatedSVD
-from nltk.corpus import stopwords
-stop_words = set(stopwords.words("english"))
 
 import cross_filt
 from cross_filt import *
