@@ -1,0 +1,378 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none !important;
+    color:unset !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+    color:unset !important;
+}
+
+.font-xl {
+    font-size: min(36px, 7vw);
+}
+
+.font-lg {
+    font-size: min(26px, 6vw);
+}
+
+.font-md {
+    font-size: min(17px, 4vw);
+}
+
+.font-sm {
+    font-size: min(15px, 3.5vw);
+}
+
+.font-xs {
+    font-size: min(17px, 4vw);
+}
+
+
+.boxed  {
+    width:80%;
+    margin: 0 auto;
+}
+
+
+:root {
+    --bgColor: #e2fcfc;
+  	--textDefault: #4e3f52;
+    --primary: rgb(79, 152, 202);
+    --secondary: #daca86;
+    --terciary: rgb(164, 209, 200);
+}
+
+:root[data-theme='dark'] {
+	--bgColor: #000;
+  	--textDefault: #fff;
+    --primary: #ACC2FF;
+    --secondary: #FFAFD0;
+    --terciary: #86E1B3;
+}
+
+.BgDisplay {
+    background-color: var(--bgColor);
+}
+
+.BgDisplay2 {
+    background-color: rgb(173, 217, 217);
+}
+
+
+.navbarColor {
+    background-color: var(--primary);
+}
+
+
+.textBackground {
+    background:var(--terciary);
+}
+
+.text-color {
+    color: var(--textDefault);
+}
+.textcol{
+color: #272727
+}
+.displayColor {
+    background-color: var(--secondary);
+}
+
+
+.primary {
+    background-color: var(--primary);
+}
+
+.trich-navbar{
+    font-family: 'Squada One', cursive;
+}
+
+
+.text-white {
+    color:white;
+}
+
+.text-conf{
+    color:rgb(117, 190, 255);
+}
+
+.text-death {
+    color:rgb(225, 116, 108);
+}
+
+.text-recov{
+    color:rgb(123, 194, 145);
+}
+
+.text-display{
+    color: rgb(200,200,200);
+}
+
+.bg-display-cases {
+    background-color: #3B5998;
+}
+
+.bg-display-deaths {
+    background-color: #ab2c1a;
+}
+
+.border-div {
+    background-color: #393939;
+    border-radius: 12px;
+    line-height: 0.9;
+    padding: 18px 0px;
+}
+
+.border-box {
+    border-color: #393939;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2;
+}
+
+.padding-def {
+    padding: 24px 24px 10px 24px;
+}
+
+.white {
+    color: white;
+}
+
+.red {
+    color: red;
+}
+
+.light {
+   color: #ffffffbf;
+}
+
+.dark {
+    color: #393939;
+}
+
+.bgGray {
+    background-color: #3B5998;
+}
+
+.bgLight {
+    background: #adc1c3;
+}
+
+.bgDark {
+    background: #082b36;
+}
+
+
+/* position */
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.margin-auto {
+    margin: 0 auto;
+}
+
+/* display */
+
+.inline-block {
+    display: inline-block;
+}
+
+
+.title-responsible{
+   font-size: max(25px, 5vw)
+}
+
+
+
+.bold {
+    font-weight: bold;
+}
+
+/* alingment */
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+
+/* spacing */
+
+.padding8 {
+    padding: 8px;
+}
+
+.padding16 {
+    padding: 16px;
+}
+
+.padding32 {
+    padding: 32px;
+}
+
+.padding40 {
+    padding: 40px;
+}
+
+.bottom8 {
+    margin-bottom: 8px;
+}
+
+.bottom16 {
+    margin-bottom: 16px;
+}
+
+.bottom24 {
+    margin-bottom: 24px;
+}
+
+.bottom32 {
+    margin-bottom: 32px;
+}
+
+.bottom40 {
+    margin-bottom: 40px;
+}
+
+.bottom64 {
+    margin-bottom: 64px;
+}
+
+.top8 {
+    margin-top: 8px;
+}
+
+.top16 {
+    margin-top: 16px;
+}
+
+.top24 {
+    margin-top: 24px;
+}
+
+.top32 {
+    margin-top: 32px;
+}
+
+.top40{
+    margin-top: 40px;
+}
+
+.paddingtop16 {
+    padding-top: 16px;
+}
+
+.paddingtop32 {
+    padding-top: 32px;
+}
+
+
+.paddingbottom32 {
+    padding-bottom: 32px;
+}
+
+
+.paddingtop40 {
+    padding-top: 40px;
+}
+
+/* border */
+.border-none {
+    border: none;
+}
+
+.radius32 {
+    border-radius: 32px;
+}
+
+.radius16 {
+    border-radius: 16px;
+}
+
+.radius12 {
+    border-radius: 16px;
+}
+
+/* specific styles */
+
+.male-icons i {
+    font-size: 10rem;
+}
+
+.info-sliders span {
+    font-size: 20px;
+}
+
+.add-btn:hover,
+.add-btn:focus,
+.add-btn:active {
+    background: #839496;
+}
+
+
+.min-height-display {
+    min-height: 85px;
+}
+
+/* media queries */
+
+@media screen and (max-width: 1200px) {
+
+    .boxed {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width: 991px) {
+
+    .boxed {
+        width: 85%;
+    }
+
+    /* .font-xl {
+        font-size: 28px;
+        line-height: 30px;
+    }
+
+    .font-lg {
+        font-size: 24px;
+        line-height: 26px;
+    }
+
+    .font-md {
+        font-size: 20px;
+        line-height:22px;
+    }
+
+    .font-sm {
+        font-size: 16px;
+        line-height: 18px;
+    }
+
+    .info-sliders span {
+        font-size: 30px;
+    } */
+}
+
+
