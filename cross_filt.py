@@ -1,11 +1,10 @@
 from textwrap import dedent as d
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import Input, Output, html, dcc, dash_table
 import pandas as pd
 import plotly.express as px
-import dash_table
+
 import dash_bootstrap_components as dbc
 
 import re

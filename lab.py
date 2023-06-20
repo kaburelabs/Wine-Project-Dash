@@ -14,9 +14,7 @@ from plotly.offline import iplot
 
 import dash
 import dash_table
-from dash.dependencies import Input, Output
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import Input, Output, html, dcc
 import dash_bootstrap_components as dbc
 import os 
 

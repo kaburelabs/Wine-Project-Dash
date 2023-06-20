@@ -7,21 +7,19 @@ from wordcloud import WordCloud, STOPWORDS
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import pandas as pd
 import numpy as np
-from pandas_profiling import ProfileReport
+from ydata_profiling import ProfileReport
 
 # Visualization Libraries
 # import plotly as py
 import plotly.graph_objs as go
 import plotly.tools as tls
 import plotly.express as px
-from plotly.offline import iplot
+# from plotly.offline import iplot
 
 import dash
-import dash_table
-from dash.dependencies import Input, Output
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import Input, Output, html, dcc, dash_table, State
 import dash_bootstrap_components as dbc
+
 import os
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.decomposition import PCA, TruncatedSVD
@@ -241,15 +239,16 @@ def create_footer():
         'background-color': 'rgb(79, 152, 202)',
         # 'padding': '2.5rem',
         'margin-top': '5rem',
-        'display': 'inline-block', 'padding': '16px 32px 8px'
+        'display': 'inline-block', 'padding': '32px',
+        'width': '100%',
     }
     footer = html.Footer(div, style=footer_style, className='twelve columns')
     return footer
 
 
 model = pickle.load(open("modelKnn.pkl", 'rb'))
-matrix = pickle.load(open("data.h5", 'rb'))
-
+matrix = pickle.load(open("test-matrix-new.pkl", 'rb'))
+matrix=pd.DataFrame(matrix)
 
 app.layout = html.Div([
     navbar(appname='Dashboard'),
@@ -441,7 +440,7 @@ def render_content(tab, val_clusters):
                         [html.Div("Select the variety to get recommendation", className="font-md"),
                             dcc.Dropdown(id='tab-5-varieties',
                                          options=[
-                                             {'label': i, 'value': n} for n, i in enumerate(matrix.index)],
+                                             {'label': i, 'value': n} for (n, i) in enumerate(matrix.index)],
                                          placeholder='(Cabernet, Merlot, Chardonnay, Red Blend...)',
                                          style={'zIndex': '999',
                                                 'position': 'relative'})
@@ -555,13 +554,13 @@ def main_page():
 
 
 @ app.callback(
-    [dash.dependencies.Output('recommender-table', 'data'),
-     dash.dependencies.Output('recommender-title', 'children')],
-    [dash.dependencies.Input('input-box', 'n_clicks')],
-    [dash.dependencies.State('tab-5-varieties', 'value')])
+    [Output('recommender-table', 'data'),
+     Output('recommender-title', 'children'),
+     Input('input-box', 'n_clicks'),
+     State('tab-5-varieties', 'value')])
 def update_output(n_clicks, variety):
     # print(matrix.iloc[value,:].values)
-    print('n_clicks', n_clicks, 'varieties', variety)
+    
     if variety == None:
         variety = 5
     distance, indice = model.kneighbors(
@@ -569,7 +568,7 @@ def update_output(n_clicks, variety):
     # print(distance, indice)
     cols = ['K', 'variety', 'Distance']
     vals = []
-
+    
     tmp = pd.DataFrame()
     i_n = 1
     for i in range(0, len(distance.flatten())):
@@ -582,7 +581,7 @@ def update_output(n_clicks, variety):
 
     df = pd.DataFrame(vals, columns=cols)
 
-    return [df.to_dict('rows'), f'Recommender for: {matrix.index[variety]}']
+    return [df.to_dict('records'), f'Recommender for: {matrix.index[variety]}']
 
 
 operators = [['ge ', '>='], ['le ', '<='], ['lt ', '<'],
@@ -675,7 +674,7 @@ def tf_idf_words(country_var):
     # fig.add_trace(fig2.data[0])
     # fig['data'][0]['marker']['color']
     fig['data'][0]['marker']['color']
-    print(fig['data'][0])
+    
     return fig
 
 
@@ -727,7 +726,7 @@ def generate_html_table(max_rows=10, n_clusters=4):
                             dash_table.DataTable(
                                 columns=[{"name": i, "id": i}
                                          for i in df.columns],
-                                data=df.to_dict('rows')
+                                data=df.to_dict('records')
                             ), style={'width': '945px'}
 
                         )
@@ -833,7 +832,7 @@ def tf_idf_words_t(df, country_var, variety, ngram, province):
     # X2 = vectorizer.fit_transform(df_train.loc[(df_train.country == country_var)]['description'])
     X2 = vectorizer.fit_transform(df['description_desc'])
 
-    features = (vectorizer.get_feature_names())
+    features = (vectorizer.get_feature_names_out())
     scores = (X2.toarray())
 
     # Getting top ranking features
@@ -874,9 +873,6 @@ def update_tf_idf(clickData, xaxis_column_name, axis_type):
     return [{'label': province, 'value': province} for province in dff['province'].unique()]
 
 
-print()
-
-
 @ app.callback(
     dash.dependencies.Output('province-selector1', 'value'),
     [dash.dependencies.Input('crossfilter-indicator-scatter', 'clickData')]
@@ -885,7 +881,7 @@ def update_tf_idf(clickData):
 
     country_name = clickData['points'][0]['customdata']
     hover = clickData['points'][0]['hovertext']
-    print(clickData)
+    
     # print(clickData)
     if type(country_name) == list:
         country_name = ''.join(country_name)
