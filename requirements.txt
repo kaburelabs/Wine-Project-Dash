@@ -4,3 +4,4 @@ pandas==2.0.2
 pandas-profiling==3.6.6
 dash==2.10.2
 dash-bootstrap-components==1.4.1
+gunicorn==20.1.0
